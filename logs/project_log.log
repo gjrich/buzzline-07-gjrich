@@ -15505,3 +15505,248 @@ ine': {'message': 'I just found JavaScript! It was funny.', 'author': 'Alice', '
 2025-02-23 16:27:24.073 | WARNING  | __main__:main:171 - WARNING: Producer interrupted by user.
 2025-02-23 16:27:24.074 | INFO     | __main__:main:177 - Kafka producer closed.
 2025-02-23 16:27:24.075 | INFO     | __main__:main:178 - TRY/FINALLY: Producer shutting down.
+2025-02-23 16:28:59.976 | INFO     | utils.utils_logger:<module>:43 - Logging to file: logs\project_log.log
+2025-02-23 16:28:59.976 | INFO     | __main__:main:104 - Starting Producer to run continuously.
+2025-02-23 16:28:59.976 | INFO     | __main__:main:105 - Things can fail or get interrupted, so use a try block.
+2025-02-23 16:28:59.976 | INFO     | __main__:main:106 - Moved .env variables into a utils config module.
+2025-02-23 16:28:59.982 | INFO     | __main__:main:108 - STEP 1. Read required environment variables.
+2025-02-23 16:28:59.982 | INFO     | utils.utils_config:get_message_interval_seconds_as_int:65 - MESSAGE_INTERVAL_SECONDS: 5
+2025-02-23 16:28:59.982 | INFO     | utils.utils_config:get_kafka_topic:58 - BUZZ_TOPIC: buzzline
+2025-02-23 16:28:59.982 | INFO     | utils.utils_config:get_kafka_broker_address:51 - KAFKA_BROKER_ADDRESS: 127.0.0.1:9092
+2025-02-23 16:28:59.982 | INFO     | utils.utils_config:get_base_data_path:80 - BASE_DATA_DIR: C:\Projects\buzzline-06-gjrich\data
+2025-02-23 16:28:59.983 | INFO     | utils.utils_config:get_live_data_path:89 - LIVE_DATA_PATH: C:\Projects\buzzline-06-gjrich\data\project_live.json
+2025-02-23 16:28:59.983 | INFO     | __main__:main:119 - STEP 2. Delete the live data file if exists to start fresh.
+2025-02-23 16:28:59.983 | INFO     | __main__:main:124 - Deleted existing live data file.
+2025-02-23 16:28:59.983 | INFO     | __main__:main:126 - STEP 3. Build the path folders to the live_data file if needed.
+2025-02-23 16:28:59.983 | INFO     | __main__:main:132 - STEP 4. Try to create a Kafka producer and topic.
+2025-02-23 16:28:59.983 | INFO     | utils.utils_config:get_zookeeper_address:44 - ZOOKEEPER_ADDRESS: 127.0.0.1:2181
+2025-02-23 16:28:59.987 | INFO     | utils.utils_producer:check_zookeeper_service_is_ready:47 - Zookeeper is ready at 127.0.0.1:2181.
+2025-02-23 16:28:59.988 | INFO     | utils.utils_config:get_kafka_broker_address:51 - KAFKA_BROKER_ADDRESS: 127.0.0.1:9092
+2025-02-23 16:29:00.324 | INFO     | utils.utils_producer:check_kafka_service_is_ready:66 - Kafka is ready. Brokers: {'throttle_time_ms': 0, 'brokers': [{'node_id': 1001, 'host': '127.0.0.1', 'port': 9092, 'rack': None}], 'cluster_id': 'b9l5Rnq0QgClSxXLB0XjaQ', 'controller_id': 1001}
+2025-02-23 16:29:00.435 | INFO     | __main__:main:141 - Kafka producer connected to 127.0.0.1:9092
+2025-02-23 16:29:00.436 | INFO     | utils.utils_config:get_kafka_broker_address:51 - KAFKA_BROKER_ADDRESS: 127.0.0.1:9092
+2025-02-23 16:29:00.755 | INFO     | utils.utils_producer:create_kafka_topic:150 - Topic 'buzzline' exists. Clearing it out...
+2025-02-23 16:29:00.755 | INFO     | utils.utils_config:get_kafka_broker_address:51 - KAFKA_BROKER_ADDRESS: 127.0.0.1:9092
+2025-02-23 16:29:01.073 | ERROR    | utils.utils_producer:clear_kafka_topic:226 - Error managing retention for topic 'buzzline': list indices must be integers or slices, not ConfigResource
+2025-02-23 16:29:01.073 | INFO     | __main__:main:149 - Kafka topic 'buzzline' is ready.
+2025-02-23 16:29:01.073 | INFO     | __main__:main:154 - STEP 5. Generate messages continuously.
+2025-02-23 16:29:01.073 | INFO     | __main__:main:157 - {'cpu_consumption': 21.6, 'ram_consumption': 4.5, 'read': 8.7, 'write': 11.4, 'disk_space_consumption': 34.3}
+2025-02-23 16:29:01.073 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 21.6, 'ram_consumption': 4.5, 'read': 8.7, 'write': 11.4, 'disk_space_consumption': 34.3}
+2025-02-23 16:29:01.073 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 21.6, 'ram_consumption': 4.5, 'read': 8.7, 'write': 11.4, 'disk_space_consumption': 34.3}
+2025-02-23 16:29:04.852 | INFO     | utils.utils_logger:<module>:43 - Logging to file: logs\project_log.log
+2025-02-23 16:29:04.854 | INFO     | __main__:main:184 - Starting Consumer to run continuously.
+2025-02-23 16:29:04.854 | INFO     | __main__:main:185 - Things can fail or get interrupted, so use a try block.
+2025-02-23 16:29:04.854 | INFO     | __main__:main:186 - Moved .env variables into a utils config module.
+2025-02-23 16:29:04.854 | INFO     | __main__:main:188 - STEP 1. Read environment variables using new config functions.
+2025-02-23 16:29:04.854 | INFO     | utils.utils_config:get_kafka_topic:58 - BUZZ_TOPIC: buzzline
+2025-02-23 16:29:04.854 | INFO     | utils.utils_config:get_kafka_broker_address:51 - KAFKA_BROKER_ADDRESS: 127.0.0.1:9092
+2025-02-23 16:29:04.854 | INFO     | utils.utils_config:get_kafka_consumer_group_id:72 - BUZZ_CONSUMER_GROUP_ID: buzz_group
+2025-02-23 16:29:04.854 | INFO     | __main__:main:193 - SUCCESS: Read environment variables.
+2025-02-23 16:29:04.854 | INFO     | __main__:main:198 - STEP 2. Begin consuming and visualizing messages.
+2025-02-23 16:29:04.854 | INFO     | __main__:consume_messages_from_kafka:43 - Called consume_messages_from_kafka() with:
+2025-02-23 16:29:04.854 | INFO     | __main__:consume_messages_from_kafka:44 -    topic='buzzline'
+2025-02-23 16:29:04.854 | INFO     | __main__:consume_messages_from_kafka:45 -    kafka_url='127.0.0.1:9092'
+2025-02-23 16:29:04.854 | INFO     | __main__:consume_messages_from_kafka:46 -    group='buzz_group'
+2025-02-23 16:29:04.854 | INFO     | __main__:consume_messages_from_kafka:48 - Step 1. Verify Kafka Services.
+2025-02-23 16:29:04.854 | INFO     | utils.utils_config:get_zookeeper_address:44 - ZOOKEEPER_ADDRESS: 127.0.0.1:2181
+2025-02-23 16:29:04.859 | INFO     | utils.utils_producer:check_zookeeper_service_is_ready:47 - Zookeeper is ready at 127.0.0.1:2181.
+2025-02-23 16:29:04.860 | INFO     | utils.utils_config:get_kafka_broker_address:51 - KAFKA_BROKER_ADDRESS: 127.0.0.1:9092
+2025-02-23 16:29:05.183 | INFO     | utils.utils_producer:check_kafka_service_is_ready:66 - Kafka is ready. Brokers: {'throttle_time_ms': 0, 'brokers': [{'node_id': 1001, 'host': '127.0.0.1', 'port': 9092, 'rack': None}], 'cluster_id': 'b9l5Rnq0QgClSxXLB0XjaQ', 'controller_id': 1001}
+2025-02-23 16:29:05.183 | INFO     | __main__:consume_messages_from_kafka:55 - Step 2. Create a Kafka consumer.
+2025-02-23 16:29:05.184 | INFO     | utils.utils_config:get_kafka_broker_address:51 - KAFKA_BROKER_ADDRESS: 127.0.0.1:9092
+2025-02-23 16:29:05.184 | INFO     | utils.utils_consumer:create_kafka_consumer:44 - Creating Kafka consumer. Topic='buzzline' and group ID='buzz_group'.
+2025-02-23 16:29:05.289 | INFO     | utils.utils_consumer:create_kafka_consumer:59 - Kafka consumer created successfully.
+2025-02-23 16:29:05.289 | INFO     | __main__:consume_messages_from_kafka:67 - Step 3. Verify topic exists.
+2025-02-23 16:29:05.289 | INFO     | utils.utils_config:get_kafka_broker_address:51 - KAFKA_BROKER_ADDRESS: 127.0.0.1:9092
+2025-02-23 16:29:05.613 | INFO     | utils.utils_producer:is_topic_available:252 - Topic 'buzzline' already exists. 
+2025-02-23 16:29:05.613 | INFO     | __main__:consume_messages_from_kafka:71 - Kafka topic 'buzzline' is ready.
+2025-02-23 16:29:05.613 | INFO     | __main__:consume_messages_from_kafka:78 - Step 4. Process messages.
+2025-02-23 16:29:05.842 | ERROR    | __main__:consume_messages_from_kafka:167 - ERROR: Could not consume messages from Kafka: Invalid file descriptor: -1
+2025-02-23 16:29:05.843 | INFO     | __main__:consume_messages_from_kafka:172 - Kafka consumer closed cleanly.
+2025-02-23 16:29:05.844 | ERROR    | __main__:main:205 - Unexpected error: Invalid file descriptor: -1
+2025-02-23 16:29:05.844 | INFO     | __main__:main:210 - Consumer shutting down.
+2025-02-23 16:29:06.081 | INFO     | __main__:main:157 - {'cpu_consumption': 21.2, 'ram_consumption': 5.0, 'read': 9.6, 'write': 12.7, 'disk_space_consumption': 32.8}
+2025-02-23 16:29:06.081 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 21.2, 'ram_consumption': 5.0, 'read': 9.6, 'write': 12.7, 'disk_space_consumption': 32.8}
+2025-02-23 16:29:06.082 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 21.2, 'ram_consumption': 5.0, 'read': 9.6, 'write': 12.7, 'disk_space_consumption': 32.8}
+2025-02-23 16:29:11.084 | INFO     | __main__:main:157 - {'cpu_consumption': 24.3, 'ram_consumption': 5.2, 'read': 10.6, 'write': 13.9, 'disk_space_consumption': 33.3}
+2025-02-23 16:29:11.084 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 24.3, 'ram_consumption': 5.2, 'read': 10.6, 'write': 13.9, 'disk_space_consumption': 33.3}
+2025-02-23 16:29:11.084 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 24.3, 'ram_consumption': 5.2, 'read': 10.6, 'write': 13.9, 'disk_space_consumption': 33.3}
+2025-02-23 16:29:12.135 | WARNING  | __main__:main:171 - WARNING: Producer interrupted by user.
+2025-02-23 16:29:12.135 | INFO     | __main__:main:177 - Kafka producer closed.
+2025-02-23 16:29:12.135 | INFO     | __main__:main:178 - TRY/FINALLY: Producer shutting down.
+2025-02-23 16:29:18.225 | INFO     | utils.utils_logger:<module>:43 - Logging to file: logs\project_log.log
+2025-02-23 16:29:18.227 | INFO     | __main__:main:104 - Starting Producer to run continuously.
+2025-02-23 16:29:18.227 | INFO     | __main__:main:105 - Things can fail or get interrupted, so use a try block.
+2025-02-23 16:29:18.227 | INFO     | __main__:main:106 - Moved .env variables into a utils config module.
+2025-02-23 16:29:18.227 | INFO     | __main__:main:108 - STEP 1. Read required environment variables.
+2025-02-23 16:29:18.227 | INFO     | utils.utils_config:get_message_interval_seconds_as_int:65 - MESSAGE_INTERVAL_SECONDS: 5
+2025-02-23 16:29:18.228 | INFO     | utils.utils_config:get_kafka_topic:58 - BUZZ_TOPIC: buzzline
+2025-02-23 16:29:18.228 | INFO     | utils.utils_config:get_kafka_broker_address:51 - KAFKA_BROKER_ADDRESS: 127.0.0.1:9092
+2025-02-23 16:29:18.228 | INFO     | utils.utils_config:get_base_data_path:80 - BASE_DATA_DIR: C:\Projects\buzzline-06-gjrich\data
+2025-02-23 16:29:18.228 | INFO     | utils.utils_config:get_live_data_path:89 - LIVE_DATA_PATH: C:\Projects\buzzline-06-gjrich\data\project_live.json
+2025-02-23 16:29:18.228 | INFO     | __main__:main:119 - STEP 2. Delete the live data file if exists to start fresh.
+2025-02-23 16:29:18.228 | INFO     | __main__:main:124 - Deleted existing live data file.
+2025-02-23 16:29:18.229 | INFO     | __main__:main:126 - STEP 3. Build the path folders to the live_data file if needed.
+2025-02-23 16:29:18.229 | INFO     | __main__:main:132 - STEP 4. Try to create a Kafka producer and topic.
+2025-02-23 16:29:18.229 | INFO     | utils.utils_config:get_zookeeper_address:44 - ZOOKEEPER_ADDRESS: 127.0.0.1:2181
+2025-02-23 16:29:18.233 | INFO     | utils.utils_producer:check_zookeeper_service_is_ready:47 - Zookeeper is ready at 127.0.0.1:2181.
+2025-02-23 16:29:18.234 | INFO     | utils.utils_config:get_kafka_broker_address:51 - KAFKA_BROKER_ADDRESS: 127.0.0.1:9092
+2025-02-23 16:29:18.562 | INFO     | utils.utils_producer:check_kafka_service_is_ready:66 - Kafka is ready. Brokers: {'throttle_time_ms': 0, 'brokers': [{'node_id': 1001, 'host': '127.0.0.1', 'port': 9092, 'rack': None}], 'cluster_id': 'b9l5Rnq0QgClSxXLB0XjaQ', 'controller_id': 1001}
+2025-02-23 16:29:18.672 | INFO     | __main__:main:141 - Kafka producer connected to 127.0.0.1:9092
+2025-02-23 16:29:18.672 | INFO     | utils.utils_config:get_kafka_broker_address:51 - KAFKA_BROKER_ADDRESS: 127.0.0.1:9092
+2025-02-23 16:29:19.004 | INFO     | utils.utils_producer:create_kafka_topic:150 - Topic 'buzzline' exists. Clearing it out...
+2025-02-23 16:29:19.004 | INFO     | utils.utils_config:get_kafka_broker_address:51 - KAFKA_BROKER_ADDRESS: 127.0.0.1:9092
+2025-02-23 16:29:19.314 | ERROR    | utils.utils_producer:clear_kafka_topic:226 - Error managing retention for topic 'buzzline': list indices must be integers or slices, not ConfigResource
+2025-02-23 16:29:19.322 | INFO     | __main__:main:149 - Kafka topic 'buzzline' is ready.
+2025-02-23 16:29:19.322 | INFO     | __main__:main:154 - STEP 5. Generate messages continuously.
+2025-02-23 16:29:19.323 | INFO     | __main__:main:157 - {'cpu_consumption': 22.3, 'ram_consumption': 4.2, 'read': 8.8, 'write': 11.4, 'disk_space_consumption': 28.6}
+2025-02-23 16:29:19.323 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 22.3, 'ram_consumption': 4.2, 'read': 8.8, 'write': 11.4, 'disk_space_consumption': 28.6}
+2025-02-23 16:29:19.324 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 22.3, 'ram_consumption': 4.2, 'read': 8.8, 'write': 11.4, 'disk_space_consumption': 28.6}
+2025-02-23 16:29:24.326 | INFO     | __main__:main:157 - {'cpu_consumption': 25.4, 'ram_consumption': 4.1, 'read': 8.3, 'write': 10.0, 'disk_space_consumption': 24.6}
+2025-02-23 16:29:24.326 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 25.4, 'ram_consumption': 4.1, 'read': 8.3, 'write': 10.0, 'disk_space_consumption': 24.6}
+2025-02-23 16:29:24.326 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 25.4, 'ram_consumption': 4.1, 'read': 8.3, 'write': 10.0, 'disk_space_consumption': 24.6}
+2025-02-23 16:29:25.314 | INFO     | utils.utils_logger:<module>:43 - Logging to file: logs\project_log.log
+2025-02-23 16:29:25.314 | INFO     | __main__:main:184 - Starting Consumer to run continuously.
+2025-02-23 16:29:25.314 | INFO     | __main__:main:185 - Things can fail or get interrupted, so use a try block.
+2025-02-23 16:29:25.314 | INFO     | __main__:main:186 - Moved .env variables into a utils config module.
+2025-02-23 16:29:25.314 | INFO     | __main__:main:188 - STEP 1. Read environment variables using new config functions.
+2025-02-23 16:29:25.314 | INFO     | utils.utils_config:get_kafka_topic:58 - BUZZ_TOPIC: buzzline
+2025-02-23 16:29:25.314 | INFO     | utils.utils_config:get_kafka_broker_address:51 - KAFKA_BROKER_ADDRESS: 127.0.0.1:9092
+2025-02-23 16:29:25.314 | INFO     | utils.utils_config:get_kafka_consumer_group_id:72 - BUZZ_CONSUMER_GROUP_ID: buzz_group
+2025-02-23 16:29:25.314 | INFO     | __main__:main:193 - SUCCESS: Read environment variables.
+2025-02-23 16:29:25.314 | INFO     | __main__:main:198 - STEP 2. Begin consuming and visualizing messages.
+2025-02-23 16:29:25.314 | INFO     | __main__:consume_messages_from_kafka:43 - Called consume_messages_from_kafka() with:
+2025-02-23 16:29:25.314 | INFO     | __main__:consume_messages_from_kafka:44 -    topic='buzzline'
+2025-02-23 16:29:25.314 | INFO     | __main__:consume_messages_from_kafka:45 -    kafka_url='127.0.0.1:9092'
+2025-02-23 16:29:25.314 | INFO     | __main__:consume_messages_from_kafka:46 -    group='buzz_group'
+2025-02-23 16:29:25.321 | INFO     | __main__:consume_messages_from_kafka:48 - Step 1. Verify Kafka Services.
+2025-02-23 16:29:25.321 | INFO     | utils.utils_config:get_zookeeper_address:44 - ZOOKEEPER_ADDRESS: 127.0.0.1:2181
+2025-02-23 16:29:25.325 | INFO     | utils.utils_producer:check_zookeeper_service_is_ready:47 - Zookeeper is ready at 127.0.0.1:2181.
+2025-02-23 16:29:25.325 | INFO     | utils.utils_config:get_kafka_broker_address:51 - KAFKA_BROKER_ADDRESS: 127.0.0.1:9092
+2025-02-23 16:29:25.649 | INFO     | utils.utils_producer:check_kafka_service_is_ready:66 - Kafka is ready. Brokers: {'throttle_time_ms': 0, 'brokers': [{'node_id': 1001, 'host': '127.0.0.1', 'port': 9092, 'rack': None}], 'cluster_id': 'b9l5Rnq0QgClSxXLB0XjaQ', 'controller_id': 1001}
+2025-02-23 16:29:25.650 | INFO     | __main__:consume_messages_from_kafka:55 - Step 2. Create a Kafka consumer.
+2025-02-23 16:29:25.650 | INFO     | utils.utils_config:get_kafka_broker_address:51 - KAFKA_BROKER_ADDRESS: 127.0.0.1:9092
+2025-02-23 16:29:25.651 | INFO     | utils.utils_consumer:create_kafka_consumer:44 - Creating Kafka consumer. Topic='buzzline' and group ID='buzz_group'.
+2025-02-23 16:29:25.758 | INFO     | utils.utils_consumer:create_kafka_consumer:59 - Kafka consumer created successfully.
+2025-02-23 16:29:25.759 | INFO     | __main__:consume_messages_from_kafka:67 - Step 3. Verify topic exists.
+2025-02-23 16:29:25.760 | INFO     | utils.utils_config:get_kafka_broker_address:51 - KAFKA_BROKER_ADDRESS: 127.0.0.1:9092
+2025-02-23 16:29:26.084 | INFO     | utils.utils_producer:is_topic_available:252 - Topic 'buzzline' already exists. 
+2025-02-23 16:29:26.084 | INFO     | __main__:consume_messages_from_kafka:71 - Kafka topic 'buzzline' is ready.
+2025-02-23 16:29:26.084 | INFO     | __main__:consume_messages_from_kafka:78 - Step 4. Process messages.
+2025-02-23 16:29:29.331 | INFO     | __main__:main:157 - {'cpu_consumption': 26.7, 'ram_consumption': 3.9, 'read': 7.1, 'write': 10.5, 'disk_space_consumption': 23.9}
+2025-02-23 16:29:29.332 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 26.7, 'ram_consumption': 3.9, 'read': 7.1, 'write': 10.5, 'disk_space_consumption': 23.9}
+2025-02-23 16:29:29.332 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 26.7, 'ram_consumption': 3.9, 'read': 7.1, 'write': 10.5, 'disk_space_consumption': 23.9}
+2025-02-23 16:29:34.334 | INFO     | __main__:main:157 - {'cpu_consumption': 30.5, 'ram_consumption': 4.2, 'read': 6.9, 'write': 10.2, 'disk_space_consumption': 25.3}
+2025-02-23 16:29:34.334 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 30.5, 'ram_consumption': 4.2, 'read': 6.9, 'write': 10.2, 'disk_space_consumption': 25.3}
+2025-02-23 16:29:34.334 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 30.5, 'ram_consumption': 4.2, 'read': 6.9, 'write': 10.2, 'disk_space_consumption': 25.3}
+2025-02-23 16:29:39.337 | INFO     | __main__:main:157 - {'cpu_consumption': 26.4, 'ram_consumption': 3.7, 'read': 7.1, 'write': 11.4, 'disk_space_consumption': 24.9}
+2025-02-23 16:29:39.338 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 26.4, 'ram_consumption': 3.7, 'read': 7.1, 'write': 11.4, 'disk_space_consumption': 24.9}
+2025-02-23 16:29:39.338 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 26.4, 'ram_consumption': 3.7, 'read': 7.1, 'write': 11.4, 'disk_space_consumption': 24.9}
+2025-02-23 16:29:44.340 | INFO     | __main__:main:157 - {'cpu_consumption': 28.3, 'ram_consumption': 3.7, 'read': 7.7, 'write': 12.2, 'disk_space_consumption': 27.1}
+2025-02-23 16:29:44.340 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 28.3, 'ram_consumption': 3.7, 'read': 7.7, 'write': 12.2, 'disk_space_consumption': 27.1}
+2025-02-23 16:29:44.350 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 28.3, 'ram_consumption': 3.7, 'read': 7.7, 'write': 12.2, 'disk_space_consumption': 27.1}
+2025-02-23 16:29:49.352 | INFO     | __main__:main:157 - {'cpu_consumption': 24.4, 'ram_consumption': 4.1, 'read': 6.8, 'write': 14.0, 'disk_space_consumption': 30.4}
+2025-02-23 16:29:49.353 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 24.4, 'ram_consumption': 4.1, 'read': 6.8, 'write': 14.0, 'disk_space_consumption': 30.4}
+2025-02-23 16:29:49.355 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 24.4, 'ram_consumption': 4.1, 'read': 6.8, 'write': 14.0, 'disk_space_consumption': 30.4}
+2025-02-23 16:29:54.357 | INFO     | __main__:main:157 - {'cpu_consumption': 24.6, 'ram_consumption': 3.6, 'read': 6.9, 'write': 15.7, 'disk_space_consumption': 32.5}
+2025-02-23 16:29:54.357 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 24.6, 'ram_consumption': 3.6, 'read': 6.9, 'write': 15.7, 'disk_space_consumption': 32.5}
+2025-02-23 16:29:54.357 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 24.6, 'ram_consumption': 3.6, 'read': 6.9, 'write': 15.7, 'disk_space_consumption': 32.5}
+2025-02-23 16:29:59.363 | INFO     | __main__:main:157 - {'cpu_consumption': 22.7, 'ram_consumption': 3.6, 'read': 6.8, 'write': 15.1, 'disk_space_consumption': 29.4}
+2025-02-23 16:29:59.363 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 22.7, 'ram_consumption': 3.6, 'read': 6.8, 'write': 15.1, 'disk_space_consumption': 29.4}
+2025-02-23 16:29:59.365 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 22.7, 'ram_consumption': 3.6, 'read': 6.8, 'write': 15.1, 'disk_space_consumption': 29.4}
+2025-02-23 16:30:04.368 | INFO     | __main__:main:157 - {'cpu_consumption': 21.8, 'ram_consumption': 3.3, 'read': 7.5, 'write': 15.6, 'disk_space_consumption': 25.8}
+2025-02-23 16:30:04.368 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 21.8, 'ram_consumption': 3.3, 'read': 7.5, 'write': 15.6, 'disk_space_consumption': 25.8}
+2025-02-23 16:30:04.372 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 21.8, 'ram_consumption': 3.3, 'read': 7.5, 'write': 15.6, 'disk_space_consumption': 25.8}
+2025-02-23 16:30:09.374 | INFO     | __main__:main:157 - {'cpu_consumption': 18.6, 'ram_consumption': 2.8, 'read': 7.0, 'write': 15.1, 'disk_space_consumption': 26.1}
+2025-02-23 16:30:09.374 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 18.6, 'ram_consumption': 2.8, 'read': 7.0, 'write': 15.1, 'disk_space_consumption': 26.1}
+2025-02-23 16:30:09.374 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 18.6, 'ram_consumption': 2.8, 'read': 7.0, 'write': 15.1, 'disk_space_consumption': 26.1}
+2025-02-23 16:30:14.379 | INFO     | __main__:main:157 - {'cpu_consumption': 21.4, 'ram_consumption': 2.8, 'read': 6.9, 'write': 14.0, 'disk_space_consumption': 25.0}
+2025-02-23 16:30:14.380 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 21.4, 'ram_consumption': 2.8, 'read': 6.9, 'write': 14.0, 'disk_space_consumption': 25.0}
+2025-02-23 16:30:14.383 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 21.4, 'ram_consumption': 2.8, 'read': 6.9, 'write': 14.0, 'disk_space_consumption': 25.0}
+2025-02-23 16:30:19.385 | INFO     | __main__:main:157 - {'cpu_consumption': 21.4, 'ram_consumption': 3.1, 'read': 6.8, 'write': 13.2, 'disk_space_consumption': 25.4}
+2025-02-23 16:30:19.385 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 21.4, 'ram_consumption': 3.1, 'read': 6.8, 'write': 13.2, 'disk_space_consumption': 25.4}
+2025-02-23 16:30:19.388 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 21.4, 'ram_consumption': 3.1, 'read': 6.8, 'write': 13.2, 'disk_space_consumption': 25.4}
+2025-02-23 16:30:24.391 | INFO     | __main__:main:157 - {'cpu_consumption': 24.3, 'ram_consumption': 3.4, 'read': 6.5, 'write': 15.1, 'disk_space_consumption': 24.3}
+2025-02-23 16:30:24.392 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 24.3, 'ram_consumption': 3.4, 'read': 6.5, 'write': 15.1, 'disk_space_consumption': 24.3}
+2025-02-23 16:30:24.393 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 24.3, 'ram_consumption': 3.4, 'read': 6.5, 'write': 15.1, 'disk_space_consumption': 24.3}
+2025-02-23 16:30:29.396 | INFO     | __main__:main:157 - {'cpu_consumption': 22.1, 'ram_consumption': 3.3, 'read': 5.6, 'write': 16.4, 'disk_space_consumption': 24.8}
+2025-02-23 16:30:29.396 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 22.1, 'ram_consumption': 3.3, 'read': 5.6, 'write': 16.4, 'disk_space_consumption': 24.8}
+2025-02-23 16:30:29.396 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 22.1, 'ram_consumption': 3.3, 'read': 5.6, 'write': 16.4, 'disk_space_consumption': 24.8}
+2025-02-23 16:30:34.402 | INFO     | __main__:main:157 - {'cpu_consumption': 23.0, 'ram_consumption': 3.6, 'read': 6.4, 'write': 17.2, 'disk_space_consumption': 24.7}
+2025-02-23 16:30:34.403 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 23.0, 'ram_consumption': 3.6, 'read': 6.4, 'write': 17.2, 'disk_space_consumption': 24.7}
+2025-02-23 16:30:34.403 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 23.0, 'ram_consumption': 3.6, 'read': 6.4, 'write': 17.2, 'disk_space_consumption': 24.7}
+2025-02-23 16:30:39.407 | INFO     | __main__:main:157 - {'cpu_consumption': 21.9, 'ram_consumption': 3.3, 'read': 6.0, 'write': 15.0, 'disk_space_consumption': 26.9}
+2025-02-23 16:30:39.407 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 21.9, 'ram_consumption': 3.3, 'read': 6.0, 'write': 15.0, 'disk_space_consumption': 26.9}
+2025-02-23 16:30:39.410 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 21.9, 'ram_consumption': 3.3, 'read': 6.0, 'write': 15.0, 'disk_space_consumption': 26.9}
+2025-02-23 16:30:44.413 | INFO     | __main__:main:157 - {'cpu_consumption': 20.3, 'ram_consumption': 3.6, 'read': 6.0, 'write': 15.6, 'disk_space_consumption': 28.0}
+2025-02-23 16:30:44.413 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 20.3, 'ram_consumption': 3.6, 'read': 6.0, 'write': 15.6, 'disk_space_consumption': 28.0}
+2025-02-23 16:30:44.413 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 20.3, 'ram_consumption': 3.6, 'read': 6.0, 'write': 15.6, 'disk_space_consumption': 28.0}
+2025-02-23 16:30:49.419 | INFO     | __main__:main:157 - {'cpu_consumption': 23.2, 'ram_consumption': 3.7, 'read': 6.4, 'write': 14.8, 'disk_space_consumption': 31.7}
+2025-02-23 16:30:49.419 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 23.2, 'ram_consumption': 3.7, 'read': 6.4, 'write': 14.8, 'disk_space_consumption': 31.7}
+2025-02-23 16:30:49.423 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 23.2, 'ram_consumption': 3.7, 'read': 6.4, 'write': 14.8, 'disk_space_consumption': 31.7}
+2025-02-23 16:30:54.425 | INFO     | __main__:main:157 - {'cpu_consumption': 24.7, 'ram_consumption': 3.4, 'read': 5.9, 'write': 12.7, 'disk_space_consumption': 27.9}
+2025-02-23 16:30:54.425 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 24.7, 'ram_consumption': 3.4, 'read': 5.9, 'write': 12.7, 'disk_space_consumption': 27.9}
+2025-02-23 16:30:54.425 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 24.7, 'ram_consumption': 3.4, 'read': 5.9, 'write': 12.7, 'disk_space_consumption': 27.9}
+2025-02-23 16:30:59.430 | INFO     | __main__:main:157 - {'cpu_consumption': 27.5, 'ram_consumption': 3.0, 'read': 5.5, 'write': 12.4, 'disk_space_consumption': 27.8}
+2025-02-23 16:30:59.430 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 27.5, 'ram_consumption': 3.0, 'read': 5.5, 'write': 12.4, 'disk_space_consumption': 27.8}
+2025-02-23 16:30:59.433 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 27.5, 'ram_consumption': 3.0, 'read': 5.5, 'write': 12.4, 'disk_space_consumption': 27.8}
+2025-02-23 16:31:04.436 | INFO     | __main__:main:157 - {'cpu_consumption': 27.5, 'ram_consumption': 3.4, 'read': 4.7, 'write': 12.4, 'disk_space_consumption': 26.7}
+2025-02-23 16:31:04.436 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 27.5, 'ram_consumption': 3.4, 'read': 4.7, 'write': 12.4, 'disk_space_consumption': 26.7}
+2025-02-23 16:31:04.438 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 27.5, 'ram_consumption': 3.4, 'read': 4.7, 'write': 12.4, 'disk_space_consumption': 26.7}
+2025-02-23 16:31:09.441 | INFO     | __main__:main:157 - {'cpu_consumption': 30.7, 'ram_consumption': 3.2, 'read': 4.3, 'write': 13.0, 'disk_space_consumption': 27.1}
+2025-02-23 16:31:09.443 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 30.7, 'ram_consumption': 3.2, 'read': 4.3, 'write': 13.0, 'disk_space_consumption': 27.1}
+2025-02-23 16:31:09.445 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 30.7, 'ram_consumption': 3.2, 'read': 4.3, 'write': 13.0, 'disk_space_consumption': 27.1}
+2025-02-23 16:31:14.447 | INFO     | __main__:main:157 - {'cpu_consumption': 28.4, 'ram_consumption': 3.4, 'read': 4.2, 'write': 11.1, 'disk_space_consumption': 31.1}
+2025-02-23 16:31:14.447 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 28.4, 'ram_consumption': 3.4, 'read': 4.2, 'write': 11.1, 'disk_space_consumption': 31.1}
+2025-02-23 16:31:14.447 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 28.4, 'ram_consumption': 3.4, 'read': 4.2, 'write': 11.1, 'disk_space_consumption': 31.1}
+2025-02-23 16:31:19.449 | INFO     | __main__:main:157 - {'cpu_consumption': 24.7, 'ram_consumption': 3.5, 'read': 4.0, 'write': 11.0, 'disk_space_consumption': 35.5}
+2025-02-23 16:31:19.449 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 24.7, 'ram_consumption': 3.5, 'read': 4.0, 'write': 11.0, 'disk_space_consumption': 35.5}
+2025-02-23 16:31:19.453 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 24.7, 'ram_consumption': 3.5, 'read': 4.0, 'write': 11.0, 'disk_space_consumption': 35.5}
+2025-02-23 16:31:24.454 | INFO     | __main__:main:157 - {'cpu_consumption': 21.2, 'ram_consumption': 3.5, 'read': 4.2, 'write': 11.3, 'disk_space_consumption': 38.5}
+2025-02-23 16:31:24.454 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 21.2, 'ram_consumption': 3.5, 'read': 4.2, 'write': 11.3, 'disk_space_consumption': 38.5}
+2025-02-23 16:31:24.454 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 21.2, 'ram_consumption': 3.5, 'read': 4.2, 'write': 11.3, 'disk_space_consumption': 38.5}
+2025-02-23 16:31:29.459 | INFO     | __main__:main:157 - {'cpu_consumption': 20.8, 'ram_consumption': 3.9, 'read': 3.7, 'write': 12.9, 'disk_space_consumption': 34.9}
+2025-02-23 16:31:29.460 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 20.8, 'ram_consumption': 3.9, 'read': 3.7, 'write': 12.9, 'disk_space_consumption': 34.9}
+2025-02-23 16:31:29.463 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 20.8, 'ram_consumption': 3.9, 'read': 3.7, 'write': 12.9, 'disk_space_consumption': 34.9}
+2025-02-23 16:31:34.465 | INFO     | __main__:main:157 - {'cpu_consumption': 17.8, 'ram_consumption': 4.1, 'read': 3.7, 'write': 14.8, 'disk_space_consumption': 34.0}
+2025-02-23 16:31:34.465 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 17.8, 'ram_consumption': 4.1, 'read': 3.7, 'write': 14.8, 'disk_space_consumption': 34.0}
+2025-02-23 16:31:34.465 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 17.8, 'ram_consumption': 4.1, 'read': 3.7, 'write': 14.8, 'disk_space_consumption': 34.0}
+2025-02-23 16:31:39.471 | INFO     | __main__:main:157 - {'cpu_consumption': 18.4, 'ram_consumption': 4.5, 'read': 3.7, 'write': 14.6, 'disk_space_consumption': 30.8}
+2025-02-23 16:31:39.473 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 18.4, 'ram_consumption': 4.5, 'read': 3.7, 'write': 14.6, 'disk_space_consumption': 30.8}
+2025-02-23 16:31:39.473 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 18.4, 'ram_consumption': 4.5, 'read': 3.7, 'write': 14.6, 'disk_space_consumption': 30.8}
+2025-02-23 16:31:44.476 | INFO     | __main__:main:157 - {'cpu_consumption': 17.6, 'ram_consumption': 4.5, 'read': 3.2, 'write': 13.4, 'disk_space_consumption': 34.5}
+2025-02-23 16:31:44.476 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 17.6, 'ram_consumption': 4.5, 'read': 3.2, 'write': 13.4, 'disk_space_consumption': 34.5}
+2025-02-23 16:31:44.478 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 17.6, 'ram_consumption': 4.5, 'read': 3.2, 'write': 13.4, 'disk_space_consumption': 34.5}
+2025-02-23 16:31:49.480 | INFO     | __main__:main:157 - {'cpu_consumption': 15.7, 'ram_consumption': 4.9, 'read': 2.9, 'write': 13.0, 'disk_space_consumption': 31.4}
+2025-02-23 16:31:49.481 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 15.7, 'ram_consumption': 4.9, 'read': 2.9, 'write': 13.0, 'disk_space_consumption': 31.4}
+2025-02-23 16:31:49.483 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 15.7, 'ram_consumption': 4.9, 'read': 2.9, 'write': 13.0, 'disk_space_consumption': 31.4}
+2025-02-23 16:31:54.485 | INFO     | __main__:main:157 - {'cpu_consumption': 15.7, 'ram_consumption': 5.0, 'read': 2.8, 'write': 13.4, 'disk_space_consumption': 30.6}
+2025-02-23 16:31:54.485 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 15.7, 'ram_consumption': 5.0, 'read': 2.8, 'write': 13.4, 'disk_space_consumption': 30.6}
+2025-02-23 16:31:54.487 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 15.7, 'ram_consumption': 5.0, 'read': 2.8, 'write': 13.4, 'disk_space_consumption': 30.6}
+2025-02-23 16:31:59.489 | INFO     | __main__:main:157 - {'cpu_consumption': 17.9, 'ram_consumption': 4.3, 'read': 2.7, 'write': 13.3, 'disk_space_consumption': 32.2}
+2025-02-23 16:31:59.490 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 17.9, 'ram_consumption': 4.3, 'read': 2.7, 'write': 13.3, 'disk_space_consumption': 32.2}
+2025-02-23 16:31:59.492 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 17.9, 'ram_consumption': 4.3, 'read': 2.7, 'write': 13.3, 'disk_space_consumption': 32.2}
+2025-02-23 16:32:04.494 | INFO     | __main__:main:157 - {'cpu_consumption': 16.5, 'ram_consumption': 3.8, 'read': 2.7, 'write': 14.1, 'disk_space_consumption': 32.6}
+2025-02-23 16:32:04.494 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 16.5, 'ram_consumption': 3.8, 'read': 2.7, 'write': 14.1, 'disk_space_consumption': 32.6}
+2025-02-23 16:32:04.495 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 16.5, 'ram_consumption': 3.8, 'read': 2.7, 'write': 14.1, 'disk_space_consumption': 32.6}
+2025-02-23 16:32:09.498 | INFO     | __main__:main:157 - {'cpu_consumption': 17.0, 'ram_consumption': 4.2, 'read': 2.9, 'write': 12.1, 'disk_space_consumption': 36.5}
+2025-02-23 16:32:09.498 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 17.0, 'ram_consumption': 4.2, 'read': 2.9, 'write': 12.1, 'disk_space_consumption': 36.5}
+2025-02-23 16:32:09.499 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 17.0, 'ram_consumption': 4.2, 'read': 2.9, 'write': 12.1, 'disk_space_consumption': 36.5}
+2025-02-23 16:32:14.501 | INFO     | __main__:main:157 - {'cpu_consumption': 16.1, 'ram_consumption': 3.8, 'read': 3.1, 'write': 13.5, 'disk_space_consumption': 38.9}
+2025-02-23 16:32:14.502 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 16.1, 'ram_consumption': 3.8, 'read': 3.1, 'write': 13.5, 'disk_space_consumption': 38.9}
+2025-02-23 16:32:14.502 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 16.1, 'ram_consumption': 3.8, 'read': 3.1, 'write': 13.5, 'disk_space_consumption': 38.9}
+2025-02-23 16:32:19.504 | INFO     | __main__:main:157 - {'cpu_consumption': 17.9, 'ram_consumption': 4.1, 'read': 3.2, 'write': 12.7, 'disk_space_consumption': 35.0}
+2025-02-23 16:32:19.504 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 17.9, 'ram_consumption': 4.1, 'read': 3.2, 'write': 12.7, 'disk_space_consumption': 35.0}
+2025-02-23 16:32:19.505 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 17.9, 'ram_consumption': 4.1, 'read': 3.2, 'write': 12.7, 'disk_space_consumption': 35.0}
+2025-02-23 16:32:24.506 | INFO     | __main__:main:157 - {'cpu_consumption': 16.8, 'ram_consumption': 3.5, 'read': 3.6, 'write': 11.3, 'disk_space_consumption': 33.0}
+2025-02-23 16:32:24.507 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 16.8, 'ram_consumption': 3.5, 'read': 3.6, 'write': 11.3, 'disk_space_consumption': 33.0}
+2025-02-23 16:32:24.509 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 16.8, 'ram_consumption': 3.5, 'read': 3.6, 'write': 11.3, 'disk_space_consumption': 33.0}
+2025-02-23 16:32:28.653 | INFO     | __main__:consume_messages_from_kafka:172 - Kafka consumer closed cleanly.
+2025-02-23 16:32:28.653 | WARNING  | __main__:main:203 - Consumer interrupted by user.
+2025-02-23 16:32:28.654 | INFO     | __main__:main:210 - Consumer shutting down.
+2025-02-23 16:32:29.511 | INFO     | __main__:main:157 - {'cpu_consumption': 16.4, 'ram_consumption': 3.7, 'read': 3.7, 'write': 10.6, 'disk_space_consumption': 29.4}
+2025-02-23 16:32:29.512 | INFO     | __main__:main:161 - STEP 4a Wrote message to file: {'cpu_consumption': 16.4, 'ram_consumption': 3.7, 'read': 3.7, 'write': 10.6, 'disk_space_consumption': 29.4}
+2025-02-23 16:32:29.514 | INFO     | __main__:main:166 - STEP 4b Sent message to Kafka topic 'buzzline': {'cpu_consumption': 16.4, 'ram_consumption': 3.7, 'read': 3.7, 'write': 10.6, 'disk_space_consumption': 29.4}
+2025-02-23 16:32:30.937 | WARNING  | __main__:main:171 - WARNING: Producer interrupted by user.
+2025-02-23 16:32:30.939 | INFO     | __main__:main:177 - Kafka producer closed.
+2025-02-23 16:32:30.940 | INFO     | __main__:main:178 - TRY/FINALLY: Producer shutting down.

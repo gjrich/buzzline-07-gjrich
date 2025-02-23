@@ -1,16 +1,6 @@
 # buzzline-06-gjrich
 
-Nearly every streaming analytics system stores processed data somewhere for further analysis, historical reference, or integration with BI tools.
-
-In this example project, we incorporate a relational data store. 
-We use SQLite, but the example could be altered to work with MySQL, PostgreSQL, or MongoDB.
-
-
-By using producer_gjrich.py and consumer_gjrich.py, the custom medieval messages produced by this environment are analyzed to determine the count of each letter.
-
-For each randomly produced message, a count of each letter is then built in the database.
-
-
+This project contains a dummy dashboard for monitoring computing resource consumption via Kafka.
 
 On Windows, to run the environment (after installing, configuring, and running zookeeper and kafka), first start the producer:
 .venv\Scripts\activate
