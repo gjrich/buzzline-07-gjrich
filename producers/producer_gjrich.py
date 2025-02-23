@@ -5,13 +5,11 @@ Stream JSON data to a file and - if available - a Kafka topic.
 
 Example JSON message
 {
-    "message": "I just shared a meme! It was amazing.",
-    "author": "Charlie",
-    "timestamp": "2025-01-29 14:35:20",
-    "category": "humor",
-    "sentiment": 0.87,
-    "keyword_mentioned": "meme",
-    "message_length": 42
+    "cpu_consumption": 25.3,
+    "ram_consumption": 4.2,
+    "read": 10.8,
+    "write": 9.5,
+    "disk_space_consumption": 30.1
 }
 
 Environment variables are in utils/utils_config module. 
@@ -42,7 +40,6 @@ from utils.utils_logger import logger
 # Stub Sentiment Analysis Function
 #####################################
 
-
 def assess_sentiment(text: str) -> float:
     """
     Stub for sentiment analysis.
@@ -50,80 +47,57 @@ def assess_sentiment(text: str) -> float:
     """
     return round(random.uniform(0, 1), 2)
 
-
 #####################################
 # Define Message Generator
 #####################################
 
-
 def generate_messages():
     """
-    Generate a stream of JSON messages.
+    Generate a stream of JSON messages with dummy computing resource consumption data.
     """
-    ADJECTIVES = ["valiant", "dreadful", "chivalrous", "glorious", "cunning", "majestic", "grim", "enchanting", "fierce", "ancient"]
-
-    ACTIONS = ["clashed", "beheld", "discovered", "proclaimed", "vanquished", "forged", "bequeathed", "unearthed", "marveled at", "besieged"]
-
-    TOPICS = ["a dragon’s lair", 
-              "a knight’s tourney", 
-              "a baron’s betrayal", 
-              "a holy relic", "a siege tower", 
-              "a bard's ballad", "a witch’s curse", 
-              "a crusader’s vow", 
-              "a castle’s ruin", 
-              "a king’s decree"]
-    
-    AUTHORS = ["Guinevere", "Lancelot", "Merlin", "Beowulf", "Eleanor", "Gawain", "Isolde", "Tristan", "Morgana", "Roland"]
-
-    KEYWORD_CATEGORIES = {
-    "a dragon’s lair": "myth",
-    "a knight’s tourney": "chivalry",
-    "a baron’s betrayal": "intrigue",
-    "a holy relic": "faith",
-    "a siege tower": "warfare",
-    "a bard's ballad": "lore",
-    "a witch’s curse": "magic",
-    "a crusader’s vow": "faith",
-    "a castle’s ruin": "history",
-    "a king’s decree": "rule"
+    # Define resource constraints
+    RESOURCES = {
+        "cpu_consumption": {"min": 1, "max": 100, "initial": 25},
+        "ram_consumption": {"min": 1, "max": 16, "initial": 4},
+        "read": {"min": 1, "max": 100, "initial": 10},
+        "write": {"min": 1, "max": 100, "initial": 10},
+        "disk_space_consumption": {"min": 10, "max": 100, "initial": 30}
     }
 
+    # Initialize current values
+    current_values = {key: info["initial"] for key, info in RESOURCES.items()}
 
     while True:
-        adjective = random.choice(ADJECTIVES)
-        action = random.choice(ACTIONS)
-        topic = random.choice(TOPICS)
-        author = random.choice(AUTHORS)
-        message_text = f"I just {action} {topic}! It was {adjective}."
-        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        # Generate new values by adjusting each resource by -10% to +10%
+        for resource, info in RESOURCES.items():
+            current = current_values[resource]
+            # Random change between -10% and +10%
+            change_percent = random.uniform(-0.15, 0.15)
+            new_value = current * (1 + change_percent)
 
-        # Find category based on keywords
-        keyword_mentioned = next(
-            (word for word in KEYWORD_CATEGORIES if word in topic), "other"
-        )
-        category = KEYWORD_CATEGORIES.get(keyword_mentioned, "other")
+            # Enforce min/max bounds
+            if new_value < info["min"]:
+                new_value = info["min"]  # Stay at min if trying to go lower
+            elif new_value > info["max"]:
+                new_value = info["max"]  # Stay at max if trying to go higher
+            
+            # Round to 1 decimal place for readability
+            current_values[resource] = round(new_value, 1)
 
-        # Assess sentiment
-        sentiment = assess_sentiment(message_text)
-
-        # Create JSON message
+        # Create JSON message with resource consumption
         json_message = {
-            "message": message_text,
-            "author": author,
-            "timestamp": timestamp,
-            "category": category,
-            "sentiment": sentiment,
-            "keyword_mentioned": keyword_mentioned,
-            "message_length": len(message_text),
+            "cpu_consumption": current_values["cpu_consumption"],
+            "ram_consumption": current_values["ram_consumption"],
+            "read": current_values["read"],
+            "write": current_values["write"],
+            "disk_space_consumption": current_values["disk_space_consumption"]
         }
 
         yield json_message
 
-
 #####################################
 # Define Main Function
 #####################################
-
 
 def main() -> None:
 
@@ -149,7 +123,7 @@ def main() -> None:
             live_data_path.unlink()
             logger.info("Deleted existing live data file.")
 
-        logger.info("STEP 3. Build the path folders to the live data file if needed.")
+        logger.info("STEP 3. Build the path folders to the live_data file if needed.")
         os.makedirs(live_data_path.parent, exist_ok=True)
     except Exception as e:
         logger.error(f"ERROR: Failed to delete live data file: {e}")
@@ -202,7 +176,6 @@ def main() -> None:
             producer.close()
             logger.info("Kafka producer closed.")
         logger.info("TRY/FINALLY: Producer shutting down.")
-
 
 #####################################
 # Conditional Execution
