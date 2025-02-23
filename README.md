@@ -1,4 +1,4 @@
-# buzzline-05-gjrich
+# buzzline-06-gjrich
 
 Nearly every streaming analytics system stores processed data somewhere for further analysis, historical reference, or integration with BI tools.
 
