@@ -2,6 +2,9 @@
 
 This project contains a dummy dashboard for monitoring computing resource consumption via Kafka.
 
+Example![image](https://github.com/user-attachments/assets/268478b2-c5df-4237-84ba-2679ff5b883e)
+
+
 On Windows, to run the environment (after installing, configuring, and running zookeeper and kafka), first start the producer:
 .venv\Scripts\activate
 py -m producers.producer_gjrich
