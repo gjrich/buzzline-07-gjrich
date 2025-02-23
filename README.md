@@ -6,7 +6,9 @@ In this example project, we incorporate a relational data store.
 We use SQLite, but the example could be altered to work with MySQL, PostgreSQL, or MongoDB.
 
 
-By using producer_gjrich.py and consumer_gjrich.py, the custom medieval messages produced by this environment are 
+By using producer_gjrich.py and consumer_gjrich.py, the custom medieval messages produced by this environment are analyzed to determine the count of each letter.
+
+For each randomly produced message, a count of each letter is then built in the database.
 
 
 
