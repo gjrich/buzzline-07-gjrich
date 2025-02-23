@@ -1,19 +1,16 @@
 """
-db_sqlite_case.py 
+db_sqlite_gjrich.py 
 
 Has the following functions:
 - init_db(config): Initialize the SQLite database and create the 'streamed_messages' table if it doesn't exist.
 - insert_message(message, config): Insert a single processed message into the SQLite database.
 
 Example JSON message with letter counts
-{
-    "message": "I just shared a meme! It was amazing.",
-    "author": "Charlie",
-    "timestamp": "2025-01-29 14:35:20",
-    "category": "humor",
-    "sentiment": 0.87,
-    "keyword_mentioned": "meme",
-    "message_length": 42,
+Example JSON message
+{"message": "I just proclaimed a king\u2019s decree! It was enchanting.",
+ "author": "Beowulf", "timestamp": "2025-02-23 12:13:27",
+   "category": "rule", "sentiment": 0.72,
+     "keyword_mentioned": "a king\u2019s decree",
     "a": 5, "b": 0, ..., "z": 1
 }
 """
