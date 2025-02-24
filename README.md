@@ -1,8 +1,10 @@
-# buzzline-06-gjrich
+# buzzline-07-gjrich
 
-This project creates a dummy computing resource consumption dashboard using Kafka and Matplotlib. A producer generates random CPU, RAM, read, write, and disk space data, sending it to a Kafka topic and a JSON file. A consumer retrieves these messages, visualizing them in real-time with four charts in a single window: line graphs for CPU and RAM, a scatter plot for read/write, and a pie chart for disk space. The visualizations dynamically scale and update, showing trends over the last 30 snapshots. 
+This project creates a resource consumption dashboard for Windows using Kafka and Matplotlib. A producer reads CPU, RAM, network, disk read, disk write, and disk space data, sending it to a Kafka topic and a JSON file. 
 
-Example![image](https://github.com/user-attachments/assets/268478b2-c5df-4237-84ba-2679ff5b883e)
+A consumer retrieves these messages, visualizing them in real-time with 5 charts and a table in a single window: line graphs for CPU, Network traffic, and RAM, a scatter plot for read/write, a table of the top RAM/CPU consuming processes, and a pie chart for disk space. The visualizations dynamically scale and update every 6 seconds, showing trends over the last 60 seconds. 
+
+Example![{600F3F64-1BC8-463C-825E-FF6328FF241B}](https://github.com/user-attachments/assets/a9bb79d6-e49a-4adb-a870-442db5dcbb87)
 
 
 Brief Short Instructions:
@@ -56,7 +58,7 @@ git clone https://github.com/gjrich/buzzline-04-gjrich/
 ```
 
 
-Download Python 3.11 for your OS:
+Download Python 3.11 for your Windows:
 
 https://www.python.org/downloads/release/python-3119/
 
@@ -75,19 +77,6 @@ Activate / Install packages
 .venv\Scripts\activate
 py -m pip install --upgrade pip setuptools wheel
 py -m pip install --upgrade -r requirements.txt
-```
-
-### Mac/Linux:
-Create Virtual Environment (in project directory)
-```zsh
-python3 -3.11 -m venv .venv
-```
-
-Activate / Install packages
-```zsh
-source .venv/bin/activate
-python3 -m pip install --upgrade pip setuptools wheel
-python3 -m pip install --upgrade -r requirements.txt
 ```
 
 ## Step 2. Start Zookeeper and Kafka (2 Terminals)
@@ -119,12 +108,6 @@ Windows:
 py -m producers.producer_gjrich
 ```
 
-Mac/Linux:
-```zsh
-source .venv/bin/activate
-python3 -m producers.producer_gjrich
-```
-
 
 ### Consumer Terminal
 
@@ -139,11 +122,6 @@ Windows:
 py -m consumers.project_consumer_gjrich
 ```
 
-Mac/Linux:
-```zsh
-source .venv/bin/activate
-python3 -m consumers.project_consumer_gjrich
-```
 
 ## Troubleshooting
 It's possible that your Environment will install Kafka/zookeeper differently than mine. 
