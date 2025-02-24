@@ -4,6 +4,11 @@ This project creates a dummy computing resource consumption dashboard using Kafk
 
 Example![image](https://github.com/user-attachments/assets/268478b2-c5df-4237-84ba-2679ff5b883e)
 
+Prereqs: 
+- virtual environment set up with packages installed
+- zookeeper installed and running
+- kafka installed and running
+See the references further down in the readme for more information.
 
 On Windows, to run the environment (after installing, configuring, and running zookeeper and kafka), first start the producer:
 .venv\Scripts\activate
