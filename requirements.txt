@@ -102,6 +102,15 @@ kafka-python-ng
 # Plotting library for data visualization
 matplotlib
 
+
+# ======================================================
+# SYSTEM METRICS
+# ======================================================
+
+# Library for fetching system metrics (CPU, RAM, disk, etc.)
+psutil
+
+
 # ======================================================
 # DATABASE INTEGRATION 
 # ======================================================

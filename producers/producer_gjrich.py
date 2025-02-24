@@ -5,33 +5,31 @@ Stream JSON data to a file and - if available - a Kafka topic.
 
 Example JSON message
 {
-    "cpu_consumption": 25.3,
-    "ram_consumption": 4.2,
-    "read": 10.8,
-    "write": 9.5,
-    "disk_space_consumption": 30.1
+    "cpu_consumption": 25.3,            # % (0-100, system-wide)
+    "ram_consumption": 42.0,            # % (0-100)
+    "read": 10.8,                       # MB/s
+    "write": 9.5,                       # MB/s
+    "disk_space_consumption": 30.1,     # % (0-100 for C:)
+    "network_usage": 150.7,             # KB/s (sent + received)
+    "top_ram_processes": [{"name": "chrome.exe", "ram": 5.2}, ...],
+    "top_cpu_processes": [{"name": "python.exe", "cpu": 10.1}, ...]  # % (0-100, system-wide)
 }
-
-Environment variables are in utils/utils_config module. 
 """
 
 #####################################
 # Import Modules
 #####################################
 
-# import from standard library
 import json
 import os
 import pathlib
-import random
 import sys
 import time
 from datetime import datetime
 
-# import external modules
 from kafka import KafkaProducer
+import psutil
 
-# import from local modules
 import utils.utils_config as config
 from utils.utils_producer import verify_services, create_kafka_topic
 from utils.utils_logger import logger
@@ -53,44 +51,63 @@ def assess_sentiment(text: str) -> float:
 
 def generate_messages():
     """
-    Generate a stream of JSON messages with dummy computing resource consumption data.
+    Generate a stream of JSON messages with real Windows system metrics using psutil.
+    Units: CPU %, RAM %, read MB/s, write MB/s, disk % (C:), network KB/s, plus top processes.
+    CPU scaled to system-wide 0-100%.
     """
-    # Define resource constraints
-    RESOURCES = {
-        "cpu_consumption": {"min": 1, "max": 100, "initial": 25},
-        "ram_consumption": {"min": 1, "max": 16, "initial": 4},
-        "read": {"min": 1, "max": 100, "initial": 10},
-        "write": {"min": 1, "max": 100, "initial": 10},
-        "disk_space_consumption": {"min": 10, "max": 100, "initial": 30}
-    }
-
-    # Initialize current values
-    current_values = {key: info["initial"] for key, info in RESOURCES.items()}
+    # Get number of logical CPUs once (for process scaling)
+    num_cpus = psutil.cpu_count()
 
     while True:
-        # Generate new values by adjusting each resource by -10% to +10%
-        for resource, info in RESOURCES.items():
-            current = current_values[resource]
-            # Random change between -10% and +10%
-            change_percent = random.uniform(-0.15, 0.15)
-            new_value = current * (1 + change_percent)
+        # CPU usage (%) over a 1-second interval, system-wide
+        cpu_percent = psutil.cpu_percent(interval=1, percpu=False)  # Average across all cores
 
-            # Enforce min/max bounds
-            if new_value < info["min"]:
-                new_value = info["min"]  # Stay at min if trying to go lower
-            elif new_value > info["max"]:
-                new_value = info["max"]  # Stay at max if trying to go higher
-            
-            # Round to 1 decimal place for readability
-            current_values[resource] = round(new_value, 1)
+        # RAM usage (%) based on total available memory
+        ram_info = psutil.virtual_memory()
+        ram_percent = ram_info.percent
 
-        # Create JSON message with resource consumption
+        # Disk I/O (read/write in MB/s over 1 second)
+        io_before = psutil.disk_io_counters()
+        time.sleep(1)
+        io_after = psutil.disk_io_counters()
+        read_mb_s = (io_after.read_bytes - io_before.read_bytes) / (1024 ** 2)
+        write_mb_s = (io_after.write_bytes - io_before.write_bytes) / (1024 ** 2)
+
+        # Network usage (sent + received in KB/s over 1 second)
+        net_before = psutil.net_io_counters()
+        time.sleep(1)
+        net_after = psutil.net_io_counters()
+        net_bytes = (net_after.bytes_sent + net_after.bytes_recv) - (net_before.bytes_sent + net_before.bytes_recv)
+        net_kb_s = net_bytes / 1024
+
+        # Disk space usage (%) for C: drive
+        disk_space_percent = psutil.disk_usage('C:\\').percent
+
+        # Top 5 processes by RAM and CPU
+        processes = []
+        for proc in psutil.process_iter(['pid', 'name', 'memory_percent', 'cpu_percent']):
+            try:
+                cpu_scaled = proc.info['cpu_percent'] / num_cpus  # Scale to system-wide 0-100%
+                processes.append({
+                    'name': proc.info['name'],
+                    'ram': proc.info['memory_percent'],
+                    'cpu': cpu_scaled
+                })
+            except (psutil.NoSuchProcess, psutil.AccessDenied):
+                continue
+        top_ram_processes = sorted(processes, key=lambda x: x['ram'], reverse=True)[:5]
+        top_cpu_processes = sorted(processes, key=lambda x: x['cpu'], reverse=True)[:5]
+
+        # Create JSON message
         json_message = {
-            "cpu_consumption": current_values["cpu_consumption"],
-            "ram_consumption": current_values["ram_consumption"],
-            "read": current_values["read"],
-            "write": current_values["write"],
-            "disk_space_consumption": current_values["disk_space_consumption"]
+            "cpu_consumption": round(cpu_percent, 1),
+            "ram_consumption": round(ram_percent, 1),
+            "read": round(read_mb_s, 1),
+            "write": round(write_mb_s, 1),
+            "disk_space_consumption": round(disk_space_percent, 1),
+            "network_usage": round(net_kb_s, 1),
+            "top_ram_processes": [{'name': p['name'], 'ram': round(p['ram'], 1)} for p in top_ram_processes],
+            "top_cpu_processes": [{'name': p['name'], 'cpu': round(p['cpu'], 1)} for p in top_cpu_processes]
         }
 
         yield json_message
@@ -100,15 +117,13 @@ def generate_messages():
 #####################################
 
 def main() -> None:
-
     logger.info("Starting Producer to run continuously.")
     logger.info("Things can fail or get interrupted, so use a try block.")
     logger.info("Moved .env variables into a utils config module.")
 
     logger.info("STEP 1. Read required environment variables.")
-
     try:
-        interval_secs: int = config.get_message_interval_seconds_as_int()
+        interval_secs: int = config.get_message_interval_seconds_as_int()  # Now 2
         topic: str = config.get_kafka_topic()
         kafka_server: str = config.get_kafka_broker_address()
         live_data_path: pathlib.Path = config.get_live_data_path()
@@ -117,7 +132,6 @@ def main() -> None:
         sys.exit(1)
 
     logger.info("STEP 2. Delete the live data file if exists to start fresh.")
-
     try:
         if live_data_path.exists():
             live_data_path.unlink()
@@ -131,7 +145,6 @@ def main() -> None:
 
     logger.info("STEP 4. Try to create a Kafka producer and topic.")
     producer = None
-
     try:
         verify_services()
         producer = KafkaProducer(
@@ -160,12 +173,11 @@ def main() -> None:
                 f.write(json.dumps(message) + "\n")
                 logger.info(f"STEP 4a Wrote message to file: {message}")
 
-            # Send to Kafka if available
             if producer:
                 producer.send(topic, value=message)
                 logger.info(f"STEP 4b Sent message to Kafka topic '{topic}': {message}")
 
-            time.sleep(interval_secs)
+            time.sleep(interval_secs)  # 2 seconds now
 
     except KeyboardInterrupt:
         logger.warning("WARNING: Producer interrupted by user.")

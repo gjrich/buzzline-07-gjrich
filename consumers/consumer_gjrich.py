@@ -12,11 +12,11 @@ import json
 import os
 import pathlib
 import sys
+import time
 from kafka import KafkaConsumer
 import matplotlib.pyplot as plt
 from collections import deque
 
-# Import specific functions instead of 'config'
 from utils.utils_config import (
     get_kafka_topic,
     get_kafka_broker_address,
@@ -33,12 +33,7 @@ from utils.utils_producer import verify_services, is_topic_available
 def consume_messages_from_kafka(topic: str, kafka_url: str, group: str):
     """
     Consume new messages from Kafka topic and update visualizations.
-    Each message is expected to be JSON-formatted with resource consumption data.
-
-    Args:
-    - topic (str): Kafka topic to consume messages from.
-    - kafka_url (str): Kafka broker address.
-    - group (str): Consumer group ID for Kafka.
+    Layout: 2x3 grid with CPU, RAM, Network, Processes, Read/Write, Disk.
     """
     logger.info("Called consume_messages_from_kafka() with:")
     logger.info(f"   {topic=}")
@@ -80,88 +75,132 @@ def consume_messages_from_kafka(topic: str, kafka_url: str, group: str):
         logger.error("ERROR: Consumer is None. Exiting.")
         sys.exit(13)
 
+    # Initialize data structures
+    cpu_history = []
+    ram_history = []
+    net_history = []
+    read_history = []
+    write_history = []
+    current_disk_space = 0
+    top_ram_processes = []
+    top_cpu_processes = []
 
-    # Initialize data structures for visualizations
-    cpu_history = deque(maxlen=30)  # Last 30 snapshots for CPU
-    ram_history = deque(maxlen=30)  # Last 30 snapshots for RAM
-    read_history = []              # Accumulate all read values
-    write_history = []             # Accumulate all write values
-    current_disk_space = 0         # Latest disk space value
+    # Set up 2x3 figure
+    fig, ((ax1, ax2, ax3), (ax4, ax5, ax6)) = plt.subplots(2, 3, figsize=(15, 10))
+    plt.ion()
 
-    # Set up Matplotlib figure with 2x2 subplots
-    fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(12, 10))  # Increased figure size slightly
-    plt.ion()  # Enable interactive mode for live updates
-
-    # Apply tight layout for autosizing and spacing
-    plt.tight_layout(pad=2.0)  # Add padding between subplots
+    plt.tight_layout(pad=2.0)
     fig.subplots_adjust(hspace=0.5, wspace=0.3)
 
     try:
         for message in consumer:
-            # Extract resource values from the Kafka message
             message_data = message.value
-            cpu = message_data['cpu_consumption']           # Unit: % (1 to 100)
-            ram = message_data['ram_consumption']           # Unit: GB (1 to 16)
-            read = message_data['read']                     # Unit: MB/s (1 to 100)
-            write = message_data['write']                   # Unit: MB/s (1 to 100)
-            disk_space = message_data['disk_space_consumption']  # Unit: % (10 to 100)
+            cpu = message_data['cpu_consumption']           # % (0-100, scaled)
+            ram = message_data['ram_consumption']           # %
+            read = message_data['read']                     # MB/s
+            write = message_data['write']                   # MB/s
+            disk_space = message_data['disk_space_consumption']  # %
+            net = message_data['network_usage']             # KB/s
+            top_ram_processes = message_data['top_ram_processes']
+            top_cpu_processes = message_data['top_cpu_processes']
 
-            # Convert RAM from GB to percentage (assuming total RAM is 16 GB)
-            ram_percent = (ram / 16) * 100
+            now = time.time()
 
-            # Update data structures
-            cpu_history.append(cpu)
-            ram_history.append(ram_percent)
-            read_history.append(read)
-            write_history.append(write)
+            # Update histories
+            cpu_history.append((now, cpu))
+            ram_history.append((now, ram))
+            net_history.append((now, net))
+            read_history.append((now, read))
+            write_history.append((now, write))
             current_disk_space = disk_space
 
-            # Update CPU Consumption Line Chart
+            # Trim to last 60 seconds for line charts
+            cutoff = now - 60
+            cpu_history = [(t, v) for t, v in cpu_history if t > cutoff]
+            ram_history = [(t, v) for t, v in ram_history if t > cutoff]
+            net_history = [(t, v) for t, v in net_history if t > cutoff]
+
+            # Trim read/write to last 200 points
+            if len(read_history) > 200:
+                read_history = read_history[-200:]
+                write_history = write_history[-200:]
+
+            # Extract for plotting
+            cpu_times, cpu_values = zip(*cpu_history) if cpu_history else ([], [])
+            ram_times, ram_values = zip(*ram_history) if ram_history else ([], [])
+            net_times, net_values = zip(*net_history) if net_history else ([], [])
+            read_times, read_values = zip(*read_history) if read_history else ([], [])
+            write_times, write_values = zip(*write_history) if write_history else ([], [])
+
+            # Reverse time scale (60 on left, 0 on right)
+            cpu_seconds = [-(t - now) for t in cpu_times] if cpu_times else [0]
+            ram_seconds = [-(t - now) for t in ram_times] if ram_times else [0]
+            net_seconds = [-(t - now) for t in net_times] if net_times else [0]
+
+            # CPU Line Chart
             ax1.clear()
-            ax1.plot(range(len(cpu_history)), cpu_history, label='CPU (%)', color='blue')
-            # Set dynamic y-axis max (50% more than highest value in last 30 steps, minimum 0)
-            cpu_max = max(cpu_history) if cpu_history else 0
-            ax1.set_ylim(0, cpu_max * 1.5 if cpu_max > 0 else 1)  # Ensure at least 1 for visibility
+            ax1.plot(cpu_seconds, cpu_values, label='CPU (%)', color='blue')
+            cpu_max = min(max(cpu_values, default=0) * 1.5, 100)
+            ax1.set_ylim(0, cpu_max if cpu_max > 0 else 1)
+            ax1.set_xlim(60, 0)
             ax1.set_title('CPU Consumption')
-            ax1.set_xlabel('Time Steps')
+            ax1.set_xlabel('Seconds')
             ax1.set_ylabel('%')
 
-            # Update RAM Consumption Line Chart
+            # RAM Line Chart
             ax2.clear()
-            ax2.plot(range(len(ram_history)), ram_history, label='RAM (%)', color='orange')
-            # Set dynamic y-axis max (50% more than highest value in last 30 steps, minimum 0)
-            ram_max = max(ram_history) if ram_history else 0
-            ax2.set_ylim(0, ram_max * 1.5 if ram_max > 0 else 1)  # Ensure at least 1 for visibility
+            ax2.plot(ram_seconds, ram_values, label='RAM (%)', color='orange')
+            ram_max = min(max(ram_values, default=0) * 1.5, 100)
+            ax2.set_ylim(0, ram_max if ram_max > 0 else 1)
+            ax2.set_xlim(60, 0)
             ax2.set_title('RAM Consumption')
-            ax2.set_xlabel('Time Steps')
+            ax2.set_xlabel('Seconds')
             ax2.set_ylabel('%')
 
-            # Update Read vs Write Scatter Plot
+            # Network Line Chart
             ax3.clear()
-            ax3.scatter(read_history, write_history, color='green', s=10)
-            # Set dynamic axes max (50% more than highest of read or write, minimum 1)
-            all_values = read_history + write_history
-            max_value = max(all_values) if all_values else 1
-            ax3.set_xlim(1, max_value * 1.5)  # Read range
-            ax3.set_ylim(1, max_value * 1.5)  # Write range (same max for symmetry)
-            ax3.set_title('Read vs Write')
-            ax3.set_xlabel('Read (MB/s)')
-            ax3.set_ylabel('Write (MB/s)')
+            ax3.plot(net_seconds, net_values, label='Network (KB/s)', color='purple')
+            net_max = max(net_values, default=0) * 1.5
+            ax3.set_ylim(0, net_max if net_max > 0 else 1)
+            ax3.set_xlim(60, 0)
+            ax3.set_title('Network Usage')
+            ax3.set_xlabel('Seconds')
+            ax3.set_ylabel('KB/s')
 
-            # Update Disk Space Pie Chart
+            # Top 5 Processes (from Kafka data)
             ax4.clear()
-            ax4.pie(
+            ram_text = "\n".join([f"{p['name']}: {p['ram']:.1f}%" for p in top_ram_processes])
+            cpu_text = "\n".join([f"{p['name']}: {p['cpu']:.1f}%" for p in top_cpu_processes])
+            ax4.text(0.1, 0.95, "Top 5 RAM\n" + ram_text, va='top', fontsize=8)
+            ax4.text(0.6, 0.95, "Top 5 CPU\n" + cpu_text, va='top', fontsize=8)
+            ax4.axis('off')
+            ax4.set_title('Top Processes')
+
+            # Read vs Write Scatter
+            ax5.clear()
+            ax5.scatter(read_values, write_values, color='green', s=10)
+            all_values = read_values + write_values
+            max_value = max(all_values, default=0) * 1.5
+            ax5.set_xlim(-max_value * 0.1, max_value)
+            ax5.set_ylim(-max_value * 0.1, max_value)
+            ax5.set_xticks([0] + [i for i in ax5.get_xticks() if i > 0])
+            ax5.set_yticks([0] + [i for i in ax5.get_yticks() if i > 0])
+            ax5.set_title('Read vs Write')
+            ax5.set_xlabel('Read (MB/s)')
+            ax5.set_ylabel('Write (MB/s)')
+
+            # Disk Space Pie Chart
+            ax6.clear()
+            ax6.pie(
                 [current_disk_space, 100 - current_disk_space],
                 labels=['Consumed', 'Empty'],
                 autopct='%1.1f%%',
                 colors=['red', 'lightgray']
             )
-            ax4.set_title('Disk Space Consumption')
+            ax6.set_title('Disk Space Consumption')
 
-            # Refresh the plot
             plt.draw()
-            plt.pause(3)  # Brief pause to update the display
-
+            plt.pause(6)  # Increased to 6s for less lag
 
     except Exception as e:
         logger.error(f"ERROR: Could not consume messages from Kafka: {e}")
@@ -176,11 +215,6 @@ def consume_messages_from_kafka(topic: str, kafka_url: str, group: str):
 #####################################
 
 def main():
-    """
-    Main function to run the consumer process.
-
-    Reads configuration and starts consumption and visualization.
-    """
     logger.info("Starting Consumer to run continuously.")
     logger.info("Things can fail or get interrupted, so use a try block.")
     logger.info("Moved .env variables into a utils config module.")
@@ -196,7 +230,7 @@ def main():
         sys.exit(1)
 
     logger.info("STEP 2. Begin consuming and visualizing messages.")
-    consumer = None  # Track consumer for cleanup
+    consumer = None
     try:
         consumer = consume_messages_from_kafka(topic, kafka_url, group_id)
     except KeyboardInterrupt:

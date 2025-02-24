@@ -61,7 +61,7 @@ def get_kafka_topic() -> str:
 
 def get_message_interval_seconds_as_int() -> int:
     """Fetch MESSAGE_INTERVAL_SECONDS from environment or use default."""
-    interval = int(os.getenv("MESSAGE_INTERVAL_SECONDS", 5))
+    interval = int(os.getenv("MESSAGE_INTERVAL_SECONDS", 3))
     logger.info(f"MESSAGE_INTERVAL_SECONDS: {interval}")
     return interval
 
