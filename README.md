@@ -48,7 +48,8 @@ _____________________________________________________________________
 ## Full Instructions
 
 ## Step 0. Clone down repository & Install Python 3.11
-Run this in the target repository (from powershell if windows). Git must be installed.
+Run this in the target repository (from powershell if windows). Git must be installed - [Download here]([url](https://github.com/git-guides/install-git))
+
 
 ```shell
 git clone https://github.com/gjrich/buzzline-04-gjrich/
