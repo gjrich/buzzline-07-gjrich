@@ -92,11 +92,8 @@ python3 -m pip install --upgrade -r requirements.txt
 
 ## Step 2. Start Zookeeper and Kafka (2 Terminals)
 
-If Zookeeper and Kafka are not already running, you'll need to restart them.
-See instructions at [SETUP-KAFKA.md] to:
-
-1. Start Zookeeper Service ([link](https://github.com/denisecase/buzzline-02-case/blob/main/docs/SETUP-KAFKA.md#step-7-start-zookeeper-service-terminal-1))
-2. Start Kafka ([link](https://github.com/denisecase/buzzline-02-case/blob/main/docs/SETUP-KAFKA.md#step-8-start-kafka-terminal-2))
+If Zookeeper and Kafka are not already running, you'll need to install and get them running them.
+See instructions at [SETUP-KAFKA.md](https://github.com/denisecase/buzzline-02-case/blob/main/docs/SETUP-KAFKA.md)
 
 ---
 
