@@ -1,8 +1,10 @@
-# buzzline-06-gjrich
+# buzzline-07-gjrich
 
-This project creates a dummy computing resource consumption dashboard using Kafka and Matplotlib. A producer generates random CPU, RAM, read, write, and disk space data, sending it to a Kafka topic and a JSON file. A consumer retrieves these messages, visualizing them in real-time with four charts in a single window: line graphs for CPU and RAM, a scatter plot for read/write, and a pie chart for disk space. The visualizations dynamically scale and update, showing trends over the last 30 snapshots. 
+This project creates a resource consumption dashboard for Windows using Kafka and Matplotlib. A producer reads CPU, RAM, network, disk read, disk write, and disk space data, sending it to a Kafka topic and a JSON file. 
 
-Example![image](https://github.com/user-attachments/assets/268478b2-c5df-4237-84ba-2679ff5b883e)
+A consumer retrieves these messages, visualizing them in real-time with 5 charts and a table in a single window: line graphs for CPU, Network traffic, and RAM, a scatter plot for read/write, a table of the top RAM/CPU consuming processes, and a pie chart for disk space. The visualizations dynamically scale and update every 6 seconds, showing trends over the last 60 seconds. 
+
+Example![{600F3F64-1BC8-463C-825E-FF6328FF241B}](https://github.com/user-attachments/assets/a9bb79d6-e49a-4adb-a870-442db5dcbb87)
 
 
 Brief Short Instructions:
