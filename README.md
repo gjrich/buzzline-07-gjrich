@@ -145,6 +145,10 @@ source .venv/bin/activate
 python3 -m consumers.project_consumer_gjrich
 ```
 
+## Troubleshooting
+It's possible that your Environment will install Kafka/zookeeper differently than mine. 
+If you run into errors with Kafka/zookeeper, you can check the IP your environment is set to run them on in ~/kafka/config/server.properties and ~/kafka/config/zookeeper.properties
+Contrast the these with what is configured in this repository by searching the relevant files for 2181 and 9092, the ports which kafka and zookeeper run on.
 
 
 ## Save Space
