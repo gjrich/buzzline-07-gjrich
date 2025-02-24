@@ -58,7 +58,7 @@ git clone https://github.com/gjrich/buzzline-04-gjrich/
 ```
 
 
-Download Python 3.11 for your OS:
+Download Python 3.11 for your Windows:
 
 https://www.python.org/downloads/release/python-3119/
 
@@ -77,19 +77,6 @@ Activate / Install packages
 .venv\Scripts\activate
 py -m pip install --upgrade pip setuptools wheel
 py -m pip install --upgrade -r requirements.txt
-```
-
-### Mac/Linux:
-Create Virtual Environment (in project directory)
-```zsh
-python3 -3.11 -m venv .venv
-```
-
-Activate / Install packages
-```zsh
-source .venv/bin/activate
-python3 -m pip install --upgrade pip setuptools wheel
-python3 -m pip install --upgrade -r requirements.txt
 ```
 
 ## Step 2. Start Zookeeper and Kafka (2 Terminals)
@@ -121,12 +108,6 @@ Windows:
 py -m producers.producer_gjrich
 ```
 
-Mac/Linux:
-```zsh
-source .venv/bin/activate
-python3 -m producers.producer_gjrich
-```
-
 
 ### Consumer Terminal
 
@@ -141,11 +122,6 @@ Windows:
 py -m consumers.project_consumer_gjrich
 ```
 
-Mac/Linux:
-```zsh
-source .venv/bin/activate
-python3 -m consumers.project_consumer_gjrich
-```
 
 ## Troubleshooting
 It's possible that your Environment will install Kafka/zookeeper differently than mine. 
