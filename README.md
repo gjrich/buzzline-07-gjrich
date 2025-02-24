@@ -109,7 +109,7 @@ This will take two terminals:
 
 Start the producer to generate the messages. 
 
-In VS Code, open a NEW terminal.
+In VS Code, open a new terminal.
 Use the commands below to activate .venv, and start the producer. 
 
 Windows:
@@ -130,7 +130,7 @@ python3 -m producers.producer_gjrich
 
 Start the associated consumer that will process and visualize the messages. 
 
-In VS Code, open a NEW terminal in your root project folder. 
+In VS Code, open a new terminal in your root project folder. 
 Use the commands below to activate .venv, and start the consumer. 
 
 Windows:
