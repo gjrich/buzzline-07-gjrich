@@ -14,14 +14,18 @@ Prereqs
 See the references further down in the readme for more information.
 
 On Windows, to run the environment (after installing, configuring, and running zookeeper and kafka), first start the producer:
+
+```shell
 .venv\Scripts\activate
 py -m producers.producer_gjrich
-
+```
 
 Then start the consumer:
+
+```shell
 .venv\Scripts\activate
 py -m consumers.consumer_gjrich
-
+```
 
 
 Detailed step by step instructions are included below, along with recommended VSCode extensions.
@@ -36,13 +40,12 @@ _____________________________________________________________________
 - Python by Microsoft
 - Python Debugger by Microsoft
 - Ruff by Astral Software (Linter)
-- **SQLite Viewer by Florian Klampfer**
+- SQLite Viewer by Florian Klampfer
 - WSL by Microsoft (on Windows Machines)
 
 
 
-Otherwise, proceed with the full instructions.
-
+## Full Instructions
 
 ## Step 0. Clone down repository & Install Python 3.11
 Run this in the target repository (from powershell if windows). Git must be installed.
@@ -149,7 +152,7 @@ python3 -m consumers.project_consumer_gjrich
 ## Save Space
 To save disk space, you can delete the .venv folder when not actively working on this project.
 You can always recreate it, activate it, and reinstall the necessary packages later. 
-Managing Python virtual environments is a valuable skill. 
+
 
 ## License
 This project is licensed under the MIT License as an example project. 
