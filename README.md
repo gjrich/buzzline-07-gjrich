@@ -42,7 +42,6 @@ _____________________________________________________________________
 - Python by Microsoft
 - Python Debugger by Microsoft
 - Ruff by Astral Software (Linter)
-- SQLite Viewer by Florian Klampfer
 - WSL by Microsoft (on Windows Machines)
 
 
